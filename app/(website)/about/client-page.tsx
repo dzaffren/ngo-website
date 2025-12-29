@@ -7,11 +7,11 @@ import { Badge } from "@/components/ui/badge"
 import { 
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger 
 } from "@/components/ui/dialog"
-import { Users, ArrowRight, Quote, BookOpen, GraduationCap, Building2, Laptop, Handshake, Heart } from "lucide-react"
+import { Users, ArrowRight, Quote, BookOpen, GraduationCap, Building2, Laptop, Handshake, Heart, Linkedin } from "lucide-react"
 
 // --- HELPER: Image URL ---
 const SAMPLE_HERO = {
-  established: "Established 2008", // <--- ADDED
+  established: "Established 2008",
   heading: "About EduEquality Foundation",
   text: "Committed to bridging the education gap and creating equal opportunities for all children.",
   image: { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop" }
@@ -47,13 +47,9 @@ const HeroBlock = ({ data }: { data: any }) => (
       <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
     </div>
     <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-      
-      {/* --- DYNAMIC BADGE --- */}
       <Badge variant="outline" className="mb-6 text-white border-white/30 bg-white/10 backdrop-blur-sm px-4 py-1">
         {data?.hero?.established || "Established 2008"}
       </Badge>
-      {/* --------------------- */}
-
       <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
         {data?.hero?.heading || "About EduEquality Foundation"}
       </h1>
@@ -64,7 +60,7 @@ const HeroBlock = ({ data }: { data: any }) => (
   </section>
 )
 
-// --- 2. OUR STORY (Fixed: Side-by-Side Cards) ---
+// --- 2. OUR STORY ---
 const StoryBlock = ({ data }: { data: any }) => (
   <section className="py-24 bg-white">
     <div className="max-w-4xl mx-auto px-4 text-center">
@@ -78,7 +74,6 @@ const StoryBlock = ({ data }: { data: any }) => (
          )}
        </div>
        
-       {/* FIX: Reverted to Grid (Side by Side) */}
        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
           <div className="bg-orange-50 p-8 rounded-2xl border border-orange-100">
              <h3 className="text-xl font-bold text-orange-600 mb-4 flex items-center gap-2">
@@ -194,7 +189,7 @@ const DepartmentsBlock = ({ departments }: { departments: any[] }) => (
   </section>
 )
 
-// --- 5. LEADERSHIP ---
+// --- 5. LEADERSHIP (UPDATED: Removed Hover Badge) ---
 const LeadershipBlock = ({ leaders }: { leaders: any[] }) => (
   <section className="py-24 bg-slate-950 text-white">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -205,25 +200,83 @@ const LeadershipBlock = ({ leaders }: { leaders: any[] }) => (
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {leaders?.map((leader: any, i: number) => (
-          <div key={i} className="group text-center flex flex-col items-center">
-             <div className="relative mb-8 inline-block">
-                <div className="absolute inset-0 bg-orange-600 rounded-3xl rotate-6 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-95 shadow-xl" />
-                <img 
-                  src={getImageUrl(leader.image?.url, "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2")} 
-                  alt={leader.name}
-                  className="relative w-72 h-80 object-cover rounded-2xl shadow-2xl z-10 transition-all duration-300 group-hover:-translate-y-3 group-hover:scale-[1.02]"
-                />
-             </div>
-             <h3 className="text-2xl font-bold text-white mb-1 tracking-tight">{leader.name}</h3>
-             <p className="text-orange-500 font-semibold text-sm mb-5 tracking-widest uppercase">{leader.role}</p>
-             <div className="relative max-w-xs mx-auto">
-                <Quote size={32} className="absolute -top-3 -left-5 text-white/5 rotate-180" />
-                <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto italic relative z-10">
-                  "{leader.quote || 'Leading with passion and integrity.'}"
-                </p>
-                <Quote size={32} className="absolute -bottom-5 -right-5 text-white/5" />
-             </div>
-          </div>
+          
+          <Dialog key={i}>
+            <DialogTrigger asChild>
+              <div className="group text-center flex flex-col items-center cursor-pointer">
+                 <div className="relative mb-8 inline-block">
+                    {/* Decorative rotated background */}
+                    <div className="absolute inset-0 bg-orange-600 rounded-3xl rotate-6 opacity-0 group-hover:opacity-100 transition-all duration-300 scale-95 shadow-xl" />
+                    
+                    {/* Image */}
+                    <img 
+                      src={getImageUrl(leader.image?.url, "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2")} 
+                      alt={leader.name}
+                      className="relative w-72 h-80 object-cover rounded-2xl shadow-2xl z-10 transition-all duration-300 group-hover:-translate-y-3 group-hover:scale-[1.02]"
+                    />
+                    
+                    {/* REMOVED THE HOVER BADGE DIV HERE */}
+                 </div>
+                 <h3 className="text-2xl font-bold text-white mb-1 tracking-tight">{leader.name}</h3>
+                 <p className="text-orange-500 font-semibold text-sm mb-5 tracking-widest uppercase">{leader.role}</p>
+                 <div className="relative max-w-xs mx-auto">
+                    <Quote size={32} className="absolute -top-3 -left-5 text-white/5 rotate-180" />
+                    <p className="text-slate-400 text-sm leading-relaxed max-w-xs mx-auto italic relative z-10 line-clamp-2">
+                      "{leader.quote || 'Leading with passion and integrity.'}"
+                    </p>
+                 </div>
+              </div>
+            </DialogTrigger>
+
+            {/* --- MODAL CONTENT --- */}
+            <DialogContent className="sm:max-w-[700px] flex flex-col sm:flex-row gap-0 p-0 overflow-hidden bg-white border-none">
+                {/* Image Side */}
+                <div className="sm:w-2/5 h-64 sm:h-auto relative bg-slate-100">
+                   <img 
+                      src={getImageUrl(leader.image?.url, "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2")} 
+                      alt={leader.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                </div>
+
+                {/* Text Side */}
+                <div className="flex-1 p-8 sm:p-10 flex flex-col">
+                  <DialogHeader className="mb-6">
+                    <DialogTitle className="text-3xl font-bold text-slate-900 mb-1 text-left">
+                        {leader.name}
+                    </DialogTitle>
+                    <div className="text-orange-600 font-bold uppercase tracking-wider text-sm text-left">{leader.role}</div>
+                  </DialogHeader>
+                  
+                  <div className="space-y-6">
+                    {leader.bio ? (
+                        <p className="text-slate-600 leading-relaxed text-base text-left">
+                            {leader.bio}
+                        </p>
+                    ) : (
+                        <p className="text-slate-400 italic text-left">No detailed biography available.</p>
+                    )}
+                    
+                    <blockquote className="border-l-4 border-orange-200 pl-4 italic text-slate-500 text-left">
+                        "{leader.quote || 'Leading with passion and integrity.'}"
+                    </blockquote>
+                  </div>
+
+                  <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
+                      {leader.linkedin && (
+                        <a 
+                            href={leader.linkedin} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center text-sm font-semibold text-slate-500 hover:text-[#0077b5] transition-colors"
+                        >
+                            <Linkedin className="w-5 h-5 mr-2" /> Connect on LinkedIn
+                        </a>
+                      )}
+                  </div>
+                </div>
+            </DialogContent>
+          </Dialog>
         ))}
       </div>
     </div>

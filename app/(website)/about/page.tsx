@@ -7,11 +7,12 @@ import { draftMode } from 'next/headers'
 const SAMPLE_HERO = {
   heading: "About EduEquality Foundation",
   text: "Committed to bridging the education gap and creating equal opportunities for all children.",
-  image: { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop" }
+  image: { url: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2000&auto=format&fit=crop" },
+  established: "Established 2008" // Added to match new UI
 }
 
 const SAMPLE_STORY = {
-  story: "Founded in 2008, EduEquality Foundation was born from a simple observation: talented children were being left behind simply because of where they were born.",
+  story: "Founded in 2008, EduEquality Foundation was born from a simple observation: talented children were being left behind simply because of where they were born. What started as a small initiative to provide textbooks to one rural school has grown into a global movement.",
   mission: "To eliminate education inequality by providing every child with access to quality education.",
   vision: "A world where zip codes and economic circumstances don't determine educational outcomes.",
   values: [
@@ -22,24 +23,31 @@ const SAMPLE_STORY = {
   ]
 }
 
+// --- UPDATED LEADERS DATA (With Bio & LinkedIn) ---
 const SAMPLE_LEADERS = [
   { 
     name: "Sarah Johnson", 
     role: "Executive Director", 
     image: { url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2" },
-    quote: "We don't just build schools; we build futures."
+    quote: "We don't just build schools; we build futures.",
+    bio: "Sarah holds a Masters in International Development and has dedicated the last 15 years to educational equity. Before founding EduEquality, she led major initiatives for UNESCO in East Africa. She believes that community engagement is the key to sustainable change.",
+    linkedin: "https://www.linkedin.com/"
   },
   { 
     name: "Michael Chen", 
     role: "Director of Programs", 
     image: { url: "https://images.unsplash.com/photo-1560250097-0b93528c311a" },
-    quote: "Efficiency and transparency are the cornerstones of trust."
+    quote: "Efficiency and transparency are the cornerstones of trust.",
+    bio: "Michael brings a decade of experience in logistics and project management from the tech sector. He switched to the non-profit world to apply agile methodologies to aid distribution, ensuring that 95% of our funds go directly to the field.",
+    linkedin: "https://www.linkedin.com/"
   },
   { 
-    name: "Aisha Patel", 
+    name: "Dr. Aisha Patel", 
     role: "Chief Academic Officer", 
     image: { url: "https://images.unsplash.com/photo-1580489944761-15a19d654956" },
-    quote: "Teachers are the architects of society."
+    quote: "Teachers are the architects of society.",
+    bio: "Dr. Patel holds a Ph.D. in Curriculum Development. She has designed educational frameworks used in over 20 countries. Her focus is on creating culturally relevant, inclusive curriculums that empower students to think critically.",
+    linkedin: "https://www.linkedin.com/"
   }
 ]
 
@@ -90,7 +98,7 @@ export default async function AboutPage() {
   }
 
   // MERGE LOGIC
-const hero = (cmsData.hero && cmsData.hero.heading) ? cmsData.hero : SAMPLE_HERO  
+  const hero = (cmsData.hero && cmsData.hero.heading) ? cmsData.hero : SAMPLE_HERO  
   const storyData = {
     story: (cmsData.story) ? cmsData.story : SAMPLE_STORY.story,
     mission: (cmsData.mission) ? cmsData.mission : SAMPLE_STORY.mission,
@@ -98,7 +106,6 @@ const hero = (cmsData.hero && cmsData.hero.heading) ? cmsData.hero : SAMPLE_HERO
     values: (cmsData.values && cmsData.values.length > 0) ? cmsData.values : SAMPLE_STORY.values
   }
 
-  // Arrays are now simpler - no filtering needed later!
   const departments = (cmsData.departments && cmsData.departments.length > 0) ? cmsData.departments : SAMPLE_DEPARTMENTS
   const leaders = (cmsData.leaders && cmsData.leaders.length > 0) ? cmsData.leaders : SAMPLE_LEADERS
   const alumni = (cmsData.alumni && cmsData.alumni.length > 0) ? cmsData.alumni : SAMPLE_ALUMNI
@@ -107,7 +114,7 @@ const hero = (cmsData.hero && cmsData.hero.heading) ? cmsData.hero : SAMPLE_HERO
     hero,
     ...storyData,
     departments,
-    leaders, // Passed separately now
+    leaders,
     alumni
   }
 

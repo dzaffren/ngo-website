@@ -3,24 +3,19 @@ import { isEditor } from '../access' // <--- Import logic
 
 export const About: GlobalConfig = {
   slug: 'about',
-      access: {
-        // Public: Everyone can see the page
-        read: () => true,
-    
-        // Restricted: Only Editors can update the page content
-        update: isEditor,
-      },
+  access: {
+    read: () => true,
+    update: isEditor,
+  },
   label: 'About Page',
   admin: {
     group: 'Website Pages',
-    // --- ADDED: Live Preview Configuration ---
     livePreview: {
-      url: () => {
+      url: ({ data }) => {
         const baseUrl = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
         return `${baseUrl}/about`
       },
     },
-    // -----------------------------------------
   },
   fields: [
     {
@@ -30,7 +25,6 @@ export const About: GlobalConfig = {
         {
           label: 'Main Content',
           fields: [
-            
             {
               name: 'hero',
               type: 'group',
@@ -43,7 +37,8 @@ export const About: GlobalConfig = {
                   defaultValue: 'Established 2008',
                   admin: {
                     description: 'The small badge above the main heading.',
-                  }},
+                  }
+                },
                 { name: 'heading', type: 'text' },
                 { name: 'text', type: 'textarea' },
                 { name: 'image', type: 'upload', relationTo: 'media' },
@@ -78,6 +73,20 @@ export const About: GlobalConfig = {
                 { name: 'role', type: 'text' },
                 { name: 'image', type: 'upload', relationTo: 'media' },
                 { name: 'quote', type: 'text' },
+                // --- NEW FIELDS ADDED HERE ---
+                { 
+                  name: 'bio', 
+                  type: 'textarea',
+                  label: 'Leader Bio',
+                  admin: {
+                    description: 'This text will appear in the popup when the card is clicked.'
+                  }
+                },
+                { 
+                    name: 'linkedin', 
+                    type: 'text', 
+                    label: 'LinkedIn URL (Optional)' 
+                }
               ]
             }
           ]
@@ -106,7 +115,6 @@ export const About: GlobalConfig = {
                     { label: 'Handshake', value: 'handshake' },
                   ]
                 },
-                // --- NESTED TEAM MEMBERS ---
                 {
                   name: 'members',
                   type: 'array',
