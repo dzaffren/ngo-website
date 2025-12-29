@@ -16,6 +16,7 @@ import { Events } from './collections/Events'
 import { Resources } from './collections/Resources'
 import { Users } from './collections/Users' // <--- IMPORT NEW USERS COLLECTION
 import { Products } from './collections/Products' // <--- IMPORT
+import { Documents } from './collections/Documents' // <--- Import
 
 import { Shop } from './globals/Shop'             // <--- IMPORT
 import { More } from './globals/More'
@@ -87,7 +88,8 @@ export default buildConfig({
     News,
     Events,
     Resources,
-    Products
+    Products,
+    Documents
   ],
   
   // 3. Add Globals

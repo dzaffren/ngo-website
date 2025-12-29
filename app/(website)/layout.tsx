@@ -21,7 +21,7 @@ const SAMPLE_NAV = {
     { label: "Fundraising", link: "/fundraising" },
     { label: "Corporate", link: "/corporate" },
     { label: "Merchandise", link: "/shop" },
-    { label: "More", link: "/more" },
+    { label: "Things on the Side", link: "/more" },
   ],
   // Fundraising is usually the button
   button: { show: true, label: "Donate", link: "/fundraising" }

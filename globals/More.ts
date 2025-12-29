@@ -3,7 +3,7 @@ import { isEditor } from '../access' // <--- Import logic
 
 export const More: GlobalConfig = {
   slug: 'more',
-  label: 'More Page (Hub)',
+  label: 'Things on the Side',
       access: {
         // Public: Everyone can see the page
         read: () => true,
