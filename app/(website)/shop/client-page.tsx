@@ -5,6 +5,9 @@ import { ProductCard } from '@/components/ProductCard'
 import { Button } from "@/components/ui/button"
 import { ExternalLink, ShoppingBag } from "lucide-react"
 
+// --- FALLBACK IMAGE CONSTANT ---
+const DEFAULT_HERO_BG = "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2000&auto=format&fit=crop"
+
 const getImageUrl = (url?: string | null) => {
   if (!url) return "";
   if (url.startsWith('http')) return url;
@@ -22,34 +25,40 @@ export default function ClientShopPage({ hero, formUrl, products }: { hero: any,
   // Use the live URL if edited, or fallback to the passed prop
   const activeFormUrl = liveHero.purchaseFormUrl || formUrl
 
+  // --- ROBUST IMAGE CHECK ---
+  const cmsImageUrl = getImageUrl(liveHero.hero?.image?.url);
+  const heroBackgroundImage = cmsImageUrl || DEFAULT_HERO_BG;
+
   return (
     <div className="min-h-screen bg-slate-50">
+      
       {/* Hero Section */}
       <section className="relative h-[500px] flex items-center justify-center overflow-hidden mt-16 bg-slate-900 text-white">
         <img
-          src={getImageUrl(liveHero.hero?.image?.url)}
+          src={heroBackgroundImage}
           alt="Shop Hero"
           className="absolute inset-0 w-full h-full object-cover opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/50 to-transparent" />
         
+        {/* --- CENTRALIZED CONTENT & BUTTON --- */}
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4 flex flex-col items-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">{liveHero.hero?.heading}</h1>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight">{liveHero.hero?.heading || "Shop for a Cause"}</h1>
           <p className="text-xl text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed">
-            {liveHero.hero?.text}
+            {liveHero.hero?.text || "Every purchase directly supports our community initiatives."}
           </p>
           
-          {/* --- CENTRAL ORDER BUTTON --- */}
-          <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-lg h-14 px-8 shadow-xl">
+          <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white text-lg h-14 px-8 shadow-xl transform hover:scale-105 transition-all">
              <a href={activeFormUrl} target="_blank" rel="noopener noreferrer">
                 <ShoppingBag className="mr-2 h-5 w-5" /> Start Order Form <ExternalLink className="ml-2 h-4 w-4 opacity-70" />
              </a>
           </Button>
+          
           <p className="mt-4 text-sm text-slate-400">
             Browse our catalog below, then use this form to list the items you wish to purchase.
           </p>
-          {/* --------------------------- */}
         </div>
+        {/* ----------------------------------- */}
       </section>
 
       {/* Products Grid */}

@@ -8,7 +8,8 @@ const SAMPLE_SHOP = {
   hero: {
     heading: "Shop for a Cause",
     text: "100% of profits fund our educational projects. Wear your support proudly.",
-    image: { url: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200" }
+    // Fixed Hero Image
+    image: { url: "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?q=80&w=2000&auto=format&fit=crop" }
   },
   purchaseFormUrl: "https://docs.google.com/forms" // Fallback link
 }
@@ -24,7 +25,7 @@ const SAMPLE_PRODUCTS = [
     description: "Premium cotton tee featuring our logo. Available in S, M, L, XL.",
     image: { url: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800" }
   },
-  // 2. Crafts (Low Stock)
+  // 2. Crafts (Low Stock) - FIXED IMAGE
   {
     id: '2',
     title: "Handwoven Community Basket",
@@ -32,7 +33,7 @@ const SAMPLE_PRODUCTS = [
     category: "crafts",
     stockStatus: "low",
     description: "Crafted by artisans in our partner villages. Each piece is unique and supports local weavers.",
-    image: { url: "https://images.unsplash.com/photo-1595966373784-a82f3c7515d4?w=800" }
+    image: { url: "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=800" }
   },
   // 3. Digital (Active)
   {
@@ -44,7 +45,7 @@ const SAMPLE_PRODUCTS = [
     description: "A comprehensive PDF breakdown of where every dollar went this year, including success stories.",
     image: { url: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800" }
   },
-  // 4. Merch (Out of Stock)
+  // 4. Merch (Out of Stock) - FIXED IMAGE
   {
     id: '4',
     title: "Eco-Friendly Tote Bag",
@@ -52,9 +53,9 @@ const SAMPLE_PRODUCTS = [
     category: "merch",
     stockStatus: "outofstock",
     description: "Reusable canvas tote perfect for groceries or books. Made from recycled materials.",
-    image: { url: "https://images.unsplash.com/photo-1597484662317-9bd7bdda2907?w=800" }
+    image: { url: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800" }
   },
-  // 5. Crafts (Active) - NEW
+  // 5. Crafts (Active)
   {
     id: '5',
     title: "Beaded Unity Bracelet",
@@ -64,7 +65,7 @@ const SAMPLE_PRODUCTS = [
     description: "Hand-beaded bracelet representing unity and hope. adjustable size.",
     image: { url: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800" }
   },
-  // 6. Merch (Active) - NEW
+  // 6. Merch (Active)
   {
     id: '6',
     title: "Morning Coffee Mug",
@@ -74,7 +75,7 @@ const SAMPLE_PRODUCTS = [
     description: "Start your day with a reminder of the change you are helping to create. Ceramic, dishwasher safe.",
     image: { url: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=800" }
   },
-  // 7. Digital (Active) - NEW
+  // 7. Digital (Active) - FIXED IMAGE
   {
     id: '7',
     title: "Supporter Wallpaper Pack",
@@ -82,7 +83,17 @@ const SAMPLE_PRODUCTS = [
     category: "digital",
     stockStatus: "instock",
     description: "High-resolution desktop and mobile wallpapers featuring photography from our field missions.",
-    image: { url: "https://images.unsplash.com/photo-1626125345510-4703ee9238b0?w=800" }
+    image: { url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800" }
+  },
+  // 8. Crafts (Active) - NEW ITEM
+  {
+    id: '8',
+    title: "Artisan Notebook Set",
+    price: 22.00,
+    category: "crafts",
+    stockStatus: "instock",
+    description: "Set of 3 journals bound with recycled paper and hand-stitched covers.",
+    image: { url: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=800" }
   }
 ]
 
