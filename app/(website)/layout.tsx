@@ -16,10 +16,10 @@ const inter = Inter({ subsets: ["latin"] })
 const SAMPLE_NAV = {
   items: [
     { label: "Home", link: "/" },
-    { label: "About", link: "/about" },
-    { label: "Projects", link: "/projects" },
+    { label: "About Us", link: "/about" },
+    { label: "Our Projects", link: "/projects" },
     { label: "Fundraising", link: "/fundraising" },
-    { label: "Corporate", link: "/corporate" },
+    { label: "Corporate Partners", link: "/corporate" },
     { label: "Merchandise", link: "/shop" },
     { label: "Things on the Side", link: "/more" },
   ],
