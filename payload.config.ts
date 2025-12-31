@@ -4,8 +4,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
-import { s3Storage } from '@payloadcms/storage-s3' // <--- IMPORT
+import { s3Storage } from '@payloadcms/storage-s3'
 
 // 1. Import your new files
 import { Media } from './collections/Media'
@@ -33,10 +32,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  plugins: [
+plugins: [
     s3Storage({
       collections: {
-        media: true, // Enable for your 'media' collection
+        media: true,
+        documents: true, // <--- ADD THIS LINE to fix the Vercel warning
       },
       bucket: process.env.S3_BUCKET || 'media',
       config: {
@@ -44,8 +44,8 @@ export default buildConfig({
           accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
         },
-        region: process.env.S3_REGION || 'us-east-1', // Supabase usually uses us-east-1 or your specific region
-        endpoint: process.env.S3_ENDPOINT || '', // e.g., https://<project-id>.supabase.co/storage/v1/s3
+        region: process.env.S3_REGION || 'us-east-1',
+        endpoint: process.env.S3_ENDPOINT || '',
         forcePathStyle: true,
       },
     }),

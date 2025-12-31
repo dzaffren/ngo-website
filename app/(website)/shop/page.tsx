@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { draftMode } from 'next/headers'
 import ClientShopPage from './client-page'
+import { Suspense } from 'react' // <--- 1. Import Suspense
 
 // --- SAMPLE DATA ---
 const SAMPLE_SHOP = {
@@ -107,13 +108,15 @@ export default async function ShopPage() {
   ])
 
   // @ts-ignore
-const hero = shopData?.hero ? shopData.hero : SAMPLE_SHOP.hero  
+  const hero = shopData?.hero ? shopData.hero : SAMPLE_SHOP.hero  
+  
   // @ts-ignore
-  const formUrl = shopData?.purchaseFormUrl || SAMPLE_SHOP.purchaseFormUrl
+  const products = (productsData?.docs && productsData.docs.length > 0) ? productsData.docs : SAMPLE_PRODUCTS
 
-  // @ts-ignore
-const products = (productsData?.docs && productsData.docs.length > 0) ? productsData.docs : SAMPLE_PRODUCTS
-
-  // REMOVE formUrl={formUrl} from here:
-  return <ClientShopPage hero={hero} products={products} />
+  return (
+    // 2. Wrap the Client Component in Suspense
+    <Suspense fallback={<div className="min-h-screen bg-slate-50 animate-pulse" />}>
+      <ClientShopPage hero={hero} products={products} />
+    </Suspense>
+  )
 }
