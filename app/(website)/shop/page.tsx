@@ -107,13 +107,13 @@ export default async function ShopPage() {
   ])
 
   // @ts-ignore
-  const hero = (shopData && shopData.hero) ? shopData : SAMPLE_SHOP
-  
+const hero = shopData?.hero ? shopData.hero : SAMPLE_SHOP.hero  
   // @ts-ignore
   const formUrl = shopData?.purchaseFormUrl || SAMPLE_SHOP.purchaseFormUrl
 
   // @ts-ignore
-  const products = (productsData?.docs && productsData.docs.length > 0) ? productsData.docs : SAMPLE_PRODUCTS
+const products = (productsData?.docs && productsData.docs.length > 0) ? productsData.docs : SAMPLE_PRODUCTS
 
-  return <ClientShopPage hero={hero} formUrl={formUrl} products={products} />
+  // REMOVE formUrl={formUrl} from here:
+  return <ClientShopPage hero={hero} products={products} />
 }

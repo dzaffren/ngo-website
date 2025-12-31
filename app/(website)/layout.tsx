@@ -10,6 +10,9 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { Navigation } from '@/components/navigation'
 import { Footer } from '@/components/footer'
 
+import { Toaster } from "@/components/ui/sonner" // <--- Import this
+import { CartProvider } from '@/context/CartContext' // <--- Import this
+
 const inter = Inter({ subsets: ["latin"] })
 
 // --- FALLBACKS ---
@@ -76,35 +79,37 @@ const finalFooter = (footerData && footerData.columns && footerData.columns.leng
       faviconUrl = theme.favicon.url.startsWith('http') ? theme.favicon.url : `${process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'}${theme.favicon.url}`
   }
 
-  return (
+return (
     <html lang="en">
       <head>
         <DynamicTheme color={brandColor} />
         {faviconUrl && <link rel="icon" href={faviconUrl} />}
       </head>
-      {/* ADDED BORDER-RED-500 FOR DEBUGGING */}
-<body className={`${inter.className} antialiased flex flex-col min-h-screen`}>        
-        <LivePreviewListener />
+      <body className={`${inter.className} antialiased flex flex-col min-h-screen`}>        
+        <CartProvider>
+          <LivePreviewListener />
 
-        {/* NAVIGATION WRAPPER */}
-        <div className="relative z-50">
-          <Navigation 
-            data={finalNav} 
+          <div className="relative z-50">
+            <Navigation 
+              data={finalNav} 
+              logoUrl={logoUrl} 
+              logoShape={theme?.logoShape || 'original'} 
+            />
+          </div>
+          
+          <main className="flex-grow pt-16">
+            {children}
+          </main>
+
+          <Footer 
+            data={finalFooter} 
             logoUrl={logoUrl} 
-            logoShape={theme?.logoShape || 'original'} 
+            logoShape={theme?.logoShape || 'original'}
           />
-        </div>
-        
-        <main className="flex-grow">
-          {children}
-        </main>
-
-        <Footer 
-          data={finalFooter} 
-          logoUrl={logoUrl} 
-          logoShape={theme?.logoShape || 'original'}
-        />
-
+          
+          {/* Add the Toaster here */}
+          <Toaster position="top-center" richColors /> 
+        </CartProvider>
       </body>
     </html>
   )

@@ -7,13 +7,11 @@ export const RichText = ({ className, content }: { className?: string; content: 
 
   return (
     <div className={[className].filter(Boolean).join(' ')}>
-      {/* We use our local function below instead of the missing import */}
       {serializeLexical({ nodes: content?.root?.children })}
     </div>
   )
 }
 
-// Custom serializer to handle rendering and fix Type errors
 function serializeLexical({ nodes }: { nodes: any[] }) {
   if (!nodes || !Array.isArray(nodes)) return null
 
@@ -22,10 +20,8 @@ function serializeLexical({ nodes }: { nodes: any[] }) {
       {nodes.map((node, index) => {
         if (!node) return null
 
-        // 1. HANDLE TEXT NODES
         if (node.type === 'text') {
           let text = <span key={index}>{node.text}</span>
-          // Apply formatting bitmasks (1=bold, 2=italic, etc.)
           if (node.format & 1) text = <strong key={index}>{text}</strong>
           if (node.format & 2) text = <em key={index}>{text}</em>
           if (node.format & 8) text = <u key={index}>{text}</u>
@@ -35,9 +31,7 @@ function serializeLexical({ nodes }: { nodes: any[] }) {
 
         const children = node.children ? serializeLexical({ nodes: node.children }) : null
 
-        // 2. HANDLE BLOCKS
         switch (node.type) {
-          // Headings
           case 'h1':
             return <h1 key={index} className="text-4xl font-bold mb-4 mt-8">{children}</h1>
           case 'h2':
@@ -51,15 +45,15 @@ function serializeLexical({ nodes }: { nodes: any[] }) {
           case 'h6':
             return <h6 key={index} className="text-base font-bold mb-4 mt-6">{children}</h6>
           
-          // Generic 'heading' node from Payload
           case 'heading':
-            // Cast to 'any' to bypass the JSX.IntrinsicElements namespace error
             const Tag = (node.tag as any) || 'h2'
             return <Tag key={index} className="font-bold mb-4 mt-8 text-2xl text-foreground">{children}</Tag>
 
-          // Standard Blocks
           case 'paragraph':
-            return <p key={index} className="mb-4 leading-relaxed text-slate-700">{children}</p>
+            // Paragraphs use <div> here to be safe against nested block-level issues 
+            // OR we keep it as <p> but ensure children are span/text only.
+            // Using <div> with paragraph styling is the safest "cheat" for hydration.
+            return <div key={index} className="mb-4 leading-relaxed text-slate-700">{children}</div>
           
           case 'ul':
           case 'list': 
@@ -90,7 +84,8 @@ function serializeLexical({ nodes }: { nodes: any[] }) {
             )
             
           default:
-            return <div key={index}>{children}</div>
+            // CHANGED: Use span instead of div for unknown nodes to prevent hydration errors
+            return <span key={index}>{children}</span>
         }
       })}
     </>

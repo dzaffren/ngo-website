@@ -1,6 +1,10 @@
 import Link from 'next/link'
-import { Card, CardContent } from "@/components/ui/card"
+// 1. Added CardFooter here
+import { Card, CardContent, CardFooter } from "@/components/ui/card" 
 import { Badge } from "@/components/ui/badge"
+// 2. Added Button import here
+import { Button } from "@/components/ui/button" 
+import { useCart } from "@/context/CartContext"
 
 interface Product {
   id: string
@@ -20,6 +24,15 @@ const getImageUrl = (url?: string | null) => {
 export function ProductCard({ product }: { product: Product }) {
   const isOutOfStock = product.stockStatus === 'outofstock'
   const isLowStock = product.stockStatus === 'low'
+  const { addItem } = useCart()
+
+  const productForCart = {
+    id: product.id,
+    title: product.title,
+    price: product.price,
+    // Fix: Ensure we pass the fully resolved URL to the cart, not just the relative path
+    image: { url: getImageUrl(product.image?.url) } 
+  }
 
   return (
     <Card className={`overflow-hidden flex flex-col h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 group ${isOutOfStock ? 'opacity-80 grayscale-[0.5]' : ''}`}>
@@ -60,14 +73,20 @@ export function ProductCard({ product }: { product: Product }) {
             <h3 className="font-bold text-slate-900 line-clamp-2 leading-tight">{product.title}</h3>
           </div>
           <span className="font-bold text-slate-900 bg-slate-100 px-2 py-1 rounded text-sm whitespace-nowrap">
-            ${product.price.toFixed(2)}
+            RM{product.price.toFixed(2)}
           </span>
         </div>
-        {/* Optional: Add description snippet here if desired */}
-        {/* <p className="text-slate-500 text-sm mt-2 line-clamp-2">{product.description}</p> */}
       </CardContent>
 
-      {/* FOOTER REMOVED (No Buttons) */}
+      <CardFooter className="p-5 pt-0">
+        <Button 
+          className="w-full" 
+          disabled={isOutOfStock}
+          onClick={() => addItem(productForCart)}
+        >
+          {isOutOfStock ? "Unavailable" : "Add to Cart"}
+        </Button>
+      </CardFooter>
     </Card>
   )
 }
